@@ -6,8 +6,10 @@ module Identified
       @value = number
     end
 
+    # Returns whether the ssn COULD be a valid ssn area code.
+    # When no date is provided, we assume the date issued is post randomization.
     def valid?(date_issued: nil)
-      # When no date is provided, we assume the date issued is post randomization.
+      # When date is not present assume post randomization
       if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
         # Currently only 000, 666 & 900+ are prohibited area numbers. See http://www.ssa.gov/employer/randomization.html
         (1..665).include?(value) || (667..899).include?(value)
@@ -21,53 +23,61 @@ module Identified
       end
     end
 
+    # Provides an array of potential states or protectorates the ssn was issued in. Date is required because this
+    # information cannot be known if it was issued after the randomizaiton date. Unknown area numbers return [].
     def issuing_areas(date_issued)
       self.class.issuing_areas(date_issued, @value)
     end
 
-  private
+    private
 
-  def self.issuing_areas(date_issued, area_number)
-    return [] if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
+    def self.issuing_areas(date_issued, area_number)
+      # When the date issued is after the randomization date, we have no information about the issuing area, so return [].
+      return [] if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
 
-    @issuing_areas_table ||= load_issuing_areas_table
-    areas = @issuing_areas_table[area_number]
+      @issuing_areas_table ||= load_issuing_areas_table
+      areas = @issuing_areas_table[area_number]
 
-    areas ? areas : []
-  end
-
-  def self.load_issuing_areas_table
-    raw_data_file = File.open('data/ssn/area_data.txt', 'r')
-    raw_data = raw_data_file.read
-
-    issuing_areas_table = parse_issuing_areas(raw_data)
-
-    raw_data_file.close
-
-    issuing_areas_table
-  end
-
-  def self.parse_issuing_areas(raw_data)
-    lookup_table = {}
-
-    raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/).each do |match|
-      start_range, end_range, area_id = extract_issuing_area_components(match)
-      (start_range..end_range).each do |area_number|
-        lookup_table[area_number] ||= []
-        lookup_table[area_number] << area_id
-      end
+      areas ? areas : []
     end
 
-    lookup_table
-  end
+    # Loads the lookup table for going from area # => state / province code
+    def self.load_issuing_areas_table
+      # Data originally taken from http://www.socialsecurity.gov/employer/stateweb.htm. The file that this read was
+      # transformed slightly from the original to make it less cumbersome to parse.
+      raw_data_file = File.open('data/ssn/area_data.txt', 'r')
+      raw_data = raw_data_file.read
 
-  def self.extract_issuing_area_components(match)
-    start_range = match[0].to_i
-    end_range = match[1].to_i
-    area = match[2]
+      issuing_areas_table = parse_issuing_areas(raw_data)
 
-    [start_range, end_range, area]
-  end
+      raw_data_file.close
 
+      issuing_areas_table
+    end
+
+    # Parses the issuing areas file contents and converts the data into a lookup table.
+    def self.parse_issuing_areas(raw_data)
+      lookup_table = {}
+
+      # The data is formatted as a range [start]-[end] followed by the two character state/province code.
+      raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/).each do |match|
+        start_range, end_range, area_id = extract_issuing_area_components(match)
+        (start_range..end_range).each do |area_number|
+          lookup_table[area_number] ||= []
+          lookup_table[area_number] << area_id
+        end
+      end
+
+      lookup_table
+    end
+
+    # Helper function to parse a single row.
+    def self.extract_issuing_area_components(match)
+      start_range = match[0].to_i
+      end_range = match[1].to_i
+      area = match[2]
+
+      [start_range, end_range, area]
+    end
   end
 end

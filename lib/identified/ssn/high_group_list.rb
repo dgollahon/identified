@@ -1,3 +1,5 @@
+# An in-memory representation of a textual high group list.
+
 module Identified
   class HighGroupList
     attr_reader :date_effective
@@ -20,6 +22,7 @@ module Identified
       @high_groups
     end
 
+    # Searches the raw for the effective date.
     def parse_date(raw_data)
       raw_date = raw_data.match(/HIGHEST GROUP ISSUED AS OF (\d+\/\d{2}\/\d{2})/)[1]
 
@@ -28,6 +31,7 @@ module Identified
       Date.new(year, month, day)
     end
 
+    # Helper function to extract the integer components from the raw date string.
     def extract_date_elements(date_string)
       date_parts = date_string.split('/')
 
@@ -38,7 +42,7 @@ module Identified
       [day, month, year]
     end
 
-    # Loads high groups into a hash table indexed by area
+    # Loads high groups into a hash table that is indexed by area.
     def parse_high_groups(raw_data)
       lookup_table = {}
 
@@ -50,9 +54,9 @@ module Identified
       lookup_table
     end
 
+    # Provides the integer versions of the high group data in a way that's easy to do mass-assignment.
     def extract_high_group_elements(high_group_tuple)
       high_group_tuple.map(&:to_i)
     end
-
   end
 end

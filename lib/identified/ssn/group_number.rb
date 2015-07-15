@@ -8,12 +8,14 @@ module Identified
       @value = number
     end
 
+    # Returns whether the ssn COULD be a valid ssn group code.
+    # When no date is provided, we assume the date issued is post randomization.
     def valid?(area: nil, date_issued: nil)
       # When no date is provided, we assume the date issued is post randomization.
       if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
         (1..99).include?(value)
       else
-        valid_high_group(area, date_issued)
+        valid_high_group?(area, date_issued)
       end
     end
 
@@ -30,7 +32,8 @@ module Identified
 
     private
 
-    def valid_high_group(area, date_issued)
+    # Helper function to determine if thi group number was valid in a given area on a given date.
+    def valid_high_group?(area, date_issued)
       high_group_list = HighGroupData.latest_applicable_list(date_issued)
       high_group = high_group_list.high_group(area)
 

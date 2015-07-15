@@ -6,6 +6,8 @@ module Identified
       @value = number
     end
 
+    # All non-zero serial numbers are valid regardless of when the ssn was issued.
+    # See http://www.ssa.gov/history/ssn/geocard.html
     def valid?
       (1..9999).include?(value)
     end
