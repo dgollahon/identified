@@ -5,22 +5,18 @@
 
 require 'date'
 
+require_relative 'ssn_filter/errors/invalid_date_format_error'
+require_relative 'ssn_filter/errors/malformed_ssn_error'
+
+require_relative 'ssn_filter/area_number'
+require_relative 'ssn_filter/group_number'
+require_relative 'ssn_filter/serial_number'
+require_relative 'ssn_filter/date_value_pair'
+require_relative 'ssn_filter/high_group_entry'
+require_relative 'ssn_filter/high_group_list'
+require_relative 'ssn_filter/high_group_data'
+require_relative 'ssn_filter/high_group_validator'
+require_relative 'ssn_filter/ssn'
+
 module SSNFilter
-  RANDOMIZATION_DATE = Date.parse('2011-06-25')
-
-  def self.valid_ssn?(ssn_string, date_of_birth_string)
-    ssn = SSN.new(ssn_string)
-
-    unless date_of_birth_string =~ /\A\d{4}-\d{2}-\d{2}\Z/
-      fail 'Invalid date_format'
-    end
-
-    date_of_birth = Date.parse(date_of_birth_string)
-
-    if date_of_birth >= RANDOMIZATION_DATE
-      BasicValidator.new(ssn).valid?
-    else
-      NonRandomizedBasicValidator.new(ssn).valid?
-    end
-  end
 end

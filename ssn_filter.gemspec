@@ -9,13 +9,24 @@ Gem::Specification.new do |spec|
 
   spec.files = [
     'lib/ssn_filter.rb',
+    'lib/ssn_filter/area_number.rb',
+    'lib/ssn_filter/date_value_pair.rb',
+    'lib/ssn_filter/group_number.rb',
+    'lib/ssn_filter/high_group_data.rb',
+    'lib/ssn_filter/high_group_entry.rb',
+    'lib/ssn_filter/high_group_list.rb',
+    'lib/ssn_filter/high_group_validator.rb',
+    'lib/ssn_filter/post_randomization_validator.rb',
+    'lib/ssn_filter/pre_randomization_validator.rb',
+    'lib/ssn_filter/serial_number.rb',
     'lib/ssn_filter/ssn.rb',
-    'lib/ssn_filter/basic_validator.rb',
-    'lib/ssn_filter/non_randomized_basic_validator.rb'
+    'lib/ssn_filter/errors/error.rb',
+    'lib/ssn_filter/errors/invalid_date_format_error.rb',
+    'lib/ssn_filter/errors/malformed_ssn_error.rb',
   ]
 
   spec.homepage = 'http://rubygems.org/gems/ssn_filter'
   spec.license = 'MIT'
 
-  spec.add_development_dependency 'rspec', '~> 3.2.1'
+  spec.add_development_dependency 'rspec', '~> 3.2'
 end

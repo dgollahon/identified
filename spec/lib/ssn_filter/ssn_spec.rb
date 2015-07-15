@@ -1,45 +1,36 @@
 require 'spec_helper'
 
-describe SSN do
-  context 'when creating an ssn' do
-    it 'should accept valid dashed format' do
-      ssn = SSN.new('123-45-6789')
+module SSNFilter
+  describe SSN do
 
-      expect(ssn.area).to eq 123
-      expect(ssn.group).to eq 45
-      expect(ssn.serial).to eq 6789
-    end
+    INVALID_LENGTH_NUM_STRINGS = %w(12345678 1234567890)
+    FIELD_TOO_SHORT = %w(12-34-5678 123-4-5678 123-45-678)
+    FIELD_TOO_LONG = %w(1234-56-789 123-456-7890 123-45-67890)
+    INTEGER_REPRESENTATION = [123456789]
+    MALFORMED_SSNS = FIELD_TOO_LONG + FIELD_TOO_SHORT + INVALID_LENGTH_NUM_STRINGS + INTEGER_REPRESENTATION
 
-    it 'should accept valid 9 digit format' do
-      ssn = SSN.new('123456789')
+    context 'when creating an ssn' do
+      it 'should accept valid dashed format' do
+        ssn = SSN.new('123-45-6789')
 
-      expect(ssn.area).to eq 123
-      expect(ssn.group).to eq 45
-      expect(ssn.serial).to eq 6789
-    end
+        expect(ssn.area).to eq 123
+        expect(ssn.group).to eq 45
+        expect(ssn.serial).to eq 6789
+      end
 
-    it 'should not accept fewer digits' do
-      expect { SSN.new('12345678') }.to raise_error StandardError
-    end
+      it 'should accept valid 9 digit format' do
+        ssn = SSN.new('123456789')
 
-    it 'should not accept more digits' do
-      expect { SSN.new('1234567890') }.to raise_error StandardError
-    end
+        expect(ssn.area).to eq 123
+        expect(ssn.group).to eq 45
+        expect(ssn.serial).to eq 6789
+      end
 
-    it 'should not accept a malformed area' do
-      expect { SSN.new('12345-10-2134') }.to raise_error StandardError
-    end
-
-    it 'should not accept a malformed group' do
-      expect { SSN.new('1234-0-2134') }.to raise_error StandardError
-    end
-
-    it 'should not accept a malformed serial' do
-      expect { SSN.new('123-45-1') }.to raise_error StandardError
-    end
-
-    it 'should not accept an integer' do
-      expect { SSN.new(123456789) }.to raise_error StandardError
+      it 'should fail with malformed ssns' do
+        MALFORMED_SSNS.each do |ssn_string|
+          expect { SSNFilter::SSN.new(ssn_string) }.to raise_error SSNFilter::MalformedSSNError
+        end
+      end
     end
   end
 end
