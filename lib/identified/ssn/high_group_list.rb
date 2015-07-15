@@ -40,14 +40,14 @@ module Identified
 
     # Loads high groups into a hash table indexed by area
     def parse_high_groups(raw_data)
-      data = {}
+      lookup_table = {}
 
       raw_data.scan(/(\d{3})\s+(\d{2})/).each do |match|
         area, group = extract_high_group_elements(match)
-        data[area] = group
+        lookup_table[area] = group
       end
 
-      data
+      lookup_table
     end
 
     def extract_high_group_elements(high_group_tuple)

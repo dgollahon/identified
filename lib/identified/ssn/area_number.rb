@@ -20,5 +20,54 @@ module Identified
         (1..665).include?(value) || (667..733).include?(value) || (750..772).include?(value)
       end
     end
+
+    def issuing_areas(date_issued)
+      self.class.issuing_areas(date_issued, @value)
+    end
+
+  private
+
+  def self.issuing_areas(date_issued, area_number)
+    return [] if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
+
+    @issuing_areas_table ||= load_issuing_areas_table
+    areas = @issuing_areas_table[area_number]
+
+    areas ? areas : []
+  end
+
+  def self.load_issuing_areas_table
+    raw_data_file = File.open('data/ssn/area_data.txt', 'r')
+    raw_data = raw_data_file.read
+
+    issuing_areas_table = parse_issuing_areas(raw_data)
+
+    raw_data_file.close
+
+    issuing_areas_table
+  end
+
+  def self.parse_issuing_areas(raw_data)
+    lookup_table = {}
+
+    raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/).each do |match|
+      start_range, end_range, area_id = extract_issuing_area_components(match)
+      (start_range..end_range).each do |area_number|
+        lookup_table[area_number] ||= []
+        lookup_table[area_number] << area_id
+      end
+    end
+
+    lookup_table
+  end
+
+  def self.extract_issuing_area_components(match)
+    start_range = match[0].to_i
+    end_range = match[1].to_i
+    area = match[2]
+
+    [start_range, end_range, area]
+  end
+
   end
 end

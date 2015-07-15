@@ -33,20 +33,8 @@ module Identified
       end
     end
 
-    def valid_on?(date_issued_string)
-      fail InvalidDateFormatError unless date_issued_string =~ /\A\d{4}-\d{2}-\d{2}\Z/
-
-      date_issued = Date.parse(date_issued_string) # NOTE: This could potentially still fail if the digits are out of range
-
-      if date_issued >= RANDOMIZATION_DATE
-        PostRandomizationValidator.new(self).valid?
-      else
-        PreRandomizationValidator.new(self).valid?
-      end
-    end
-
-    def retired?
-      RETIRED_SSNS.any? { |ssn| ssn == self }
+    def issuing_areas(date_issued)
+      @area.issuing_areas(date_issued)
     end
 
     def ==(other)
@@ -58,6 +46,10 @@ module Identified
     end
 
     private
+
+    def retired?
+      RETIRED_SSNS.any? { |ssn| ssn == self }
+    end
 
     def extract_ssn_values(ssn_string)
       formatted_ssn = format_ssn(ssn_string)
