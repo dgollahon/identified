@@ -5,11 +5,12 @@ module Identified
     end
 
     def self.latest_applicable_list(date_issued)
-      @high_group_lists.detect { |list| date_issued <= list.date_issued }
+      @high_group_lists.detect { |list| date_issued <= list.date_effective }
     end
 
     def self.load_data
-      Dir['data/ssn/high_groups/*.txt'].map { |filename| HighGroupList.new(filename) }
+      unordered_data = Dir['data/ssn/high_groups/*.txt'].map { |filename| HighGroupList.new(filename) }
+      unordered_data.sort_by!(&:date_effective)
     end
   end
 end

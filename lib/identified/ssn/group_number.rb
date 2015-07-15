@@ -56,8 +56,8 @@ module Identified
       allocation_sequence = [*1.step(9,2), *10.step(98,2), *2.step(8,2), *11.step(99,2)]
 
       # Build the lookup table (group number => sequence number)
-      allocation_sequence.each_with_index do |group_number, index|
-        index_table[group_number] = index + 1
+      allocation_sequence.each.with_index(1) do |group_number, index|
+        index_table[group_number] = index
       end
 
       index_table
