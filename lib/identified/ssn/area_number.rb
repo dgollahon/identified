@@ -1,4 +1,4 @@
-module SSNFilter
+module Identified
   class AreaNumber
     attr_reader :value
 

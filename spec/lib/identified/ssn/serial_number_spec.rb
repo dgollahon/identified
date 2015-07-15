@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SSNFilter
+module Identified
   describe SerialNumber do
     context 'area validation' do
       it 'should not accept 0 as a serial' do

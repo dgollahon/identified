@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module SSNFilter
-  describe SSNFilter do
+module Identified
+  describe Identified do
     SSNS_WITH_ZEROS = %w(000-01-2345 123-00-4567 123-45-0000)
     PRE_RANDOMIZED_INVALID_AREAS = %w(734-12-3456 742-12-3456 749-12-3456 773-12-3456)
     POST_RANDOMIZED_INVALID_AREAS = %w(666-12-3456 900-12-3456)

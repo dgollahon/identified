@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SSNFilter
+module Identified
   describe AreaNumber do
     context 'post randomization area validation' do
       it 'should not accept 0 as an area' do

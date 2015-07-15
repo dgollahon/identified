@@ -1,4 +1,4 @@
-module SSNFilter
+module Identified
   class SerialNumber
     attr_reader :value
 

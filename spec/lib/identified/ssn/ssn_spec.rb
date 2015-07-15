@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SSNFilter
+module Identified
   describe SSN do
 
     INVALID_LENGTH_NUM_STRINGS = %w(12345678 1234567890)
@@ -28,7 +28,7 @@ module SSNFilter
 
       it 'should fail with malformed ssns' do
         MALFORMED_SSNS.each do |ssn_string|
-          expect { SSNFilter::SSN.new(ssn_string) }.to raise_error SSNFilter::MalformedSSNError
+          expect { Identified::SSN.new(ssn_string) }.to raise_error Identified::MalformedSSNError
         end
       end
     end

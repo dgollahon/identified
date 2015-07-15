@@ -1,4 +1,4 @@
-module SSNFilter
+module Identified
   class HighGroupList
     attr_reader :date_effective
 

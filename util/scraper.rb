@@ -11,7 +11,7 @@ doc.css('a').each do |link|
       link_name = link.children.first.to_s
       file_name = link_name.strip.downcase.sub(/\s/, '_') + '_raw.txt'
       puts 'Writing: ' + file_name
-      File.open("data/#{file_name}", 'w') do |file|
+      File.open("data/ssn/high_groups/#{file_name}", 'w') do |file|
         downloaded_file = open('http://www.ssa.gov/employer/' + link['href'])
         file.write(downloaded_file.read())
       end

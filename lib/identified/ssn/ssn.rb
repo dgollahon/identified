@@ -1,4 +1,4 @@
-module SSNFilter
+module Identified
   class SSN
     RANDOMIZATION_DATE = Date.parse('2011-06-25').freeze
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module SSNFilter
+module Identified
   describe GroupNumber do
     context 'basic group number validation' do
       it 'should not accept 0 as a group' do
