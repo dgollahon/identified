@@ -24,7 +24,10 @@ module Identified
 
     def valid?(date_issued: nil)
       if date_issued
-        @area.valid?(date_issued: date_issued) && @group.valid?(date_issued: date_issued) && @serial.valid? && !retired?
+        @area.valid?(date_issued: date_issued) \
+        && @group.valid?(area: area, date_issued: date_issued) \
+        && @serial.valid? \
+        && !retired?
       else
         @area.valid? && @group.valid? && @serial.valid? && !retired?
       end

@@ -8,12 +8,12 @@ module Identified
       @value = number
     end
 
-    def valid?(date_issued: nil)
+    def valid?(area: nil, date_issued: nil)
       # When no date is provided, we assume the date issued is post randomization.
-      if !date_issued || date_issued >= SSN.RANDOMIZATION_DATE
+      if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
         (1..99).include?(value)
       else
-        valid_high_group(date_issued)
+        valid_high_group(area, date_issued)
       end
     end
 
@@ -30,7 +30,7 @@ module Identified
 
     private
 
-    def valid_high_group(date_issued)
+    def valid_high_group(area, date_issued)
       high_group_list = HighGroupData.latest_applicable_list(date_issued)
       high_group = high_group_list.high_group(area)
 

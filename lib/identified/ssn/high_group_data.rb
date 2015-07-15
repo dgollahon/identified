@@ -5,6 +5,7 @@ module Identified
     end
 
     def self.latest_applicable_list(date_issued)
+      @high_group_lists ||= load_data
       @high_group_lists.detect { |list| date_issued <= list.date_effective }
     end
 
