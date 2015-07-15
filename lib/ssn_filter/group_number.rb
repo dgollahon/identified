@@ -13,7 +13,7 @@ module SSNFilter
       if !date_issued || date_issued >= SSN.RANDOMIZATION_DATE
         (1..99).include?(value)
       else
-        nil # TODO
+        valid_high_group(date_issued)
       end
     end
 
@@ -30,8 +30,16 @@ module SSNFilter
 
     private
 
+    def valid_high_group(date_issued)
+      high_group_list = HighGroupData.latest_applicable_list(date_issued)
+      high_group = high_group_list.high_group(area)
+
+      value <= high_group
+    end
+
     # Converts a group number to the index of the sequence of its allocation. Valid return values are between 1 and 100.
     def self.convert_to_sequential_number(group_number)
+      @group_index_table ||= generate_index_conversion
       @group_index_table[group_number]
     end
 
@@ -54,8 +62,5 @@ module SSNFilter
 
       index_table
     end
-
-    # Load lookup table on class initialization
-    @group_index_table = generate_index_conversion
   end
 end

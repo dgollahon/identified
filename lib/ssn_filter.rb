@@ -12,10 +12,8 @@ require_relative 'ssn_filter/area_number'
 require_relative 'ssn_filter/group_number'
 require_relative 'ssn_filter/serial_number'
 require_relative 'ssn_filter/date_value_pair'
-require_relative 'ssn_filter/high_group_entry'
 require_relative 'ssn_filter/high_group_list'
 require_relative 'ssn_filter/high_group_data'
-require_relative 'ssn_filter/high_group_validator'
 require_relative 'ssn_filter/ssn'
 
 module SSNFilter
