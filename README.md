@@ -42,13 +42,21 @@ ssn.valid? # => true
 It is also possible to check against the SSN high group lists to eliminate millions of potentially invalid numbers. This requires knowing the issuance date of the SSN. If the provided date is after the randomization date, the behavior of `valid?` will be as if you did not provide an issuance date argument. The date must be in `yyyy-mm-dd` format.
 
 ```ruby
-ssn.valid?('1985-10-26') # => false
+ssn = Identified::SSN.new('012-88-9999')
+
+# The earlier date corresponds to one high group listing, wherease the later
+# corresponds to another high group chart which indicates 88 is now valid.
+earlier_issuance = '2004-03-01'
+later_issuance = '2004-03-02'
+
+ssn.valid?(date_issued: earlier_issuance) # => false
+ssn.valid?(date_issued: later_issuance) # => true
 ```
 
 You can also often find out which state / province issued the SSN as long as the issuance date is prior to SSN randomization. The date must be in `yyyy-mm-dd` format.
 
 ```ruby
-ssn.issuing_areas('1985-10-26') # => ['NY']
+ssn.issuing_areas(date_issued: '1985-10-26') # => ['NY']
 ```
 
 Additionally, you can access each component field of the SSN as follows:

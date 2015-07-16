@@ -29,6 +29,7 @@ module Identified
     # When no date is provided, we assume the date issued is post randomization.
     def valid?(date_issued: nil)
       if date_issued
+        date_issued = parse_date(date_issued)
         @area.valid?(date_issued: date_issued) \
         && @group.valid?(area: area, date_issued: date_issued) \
         && @serial.valid? \
@@ -40,7 +41,8 @@ module Identified
 
     # Provides an array of potential states or protectorates the ssn was issued in. Date is required because this
     # information cannot be known if it was issued after the randomizaiton date. Unknown area numbers return [].
-    def issuing_areas(date_issued)
+    def issuing_areas(date_issued:)
+      date_issued = parse_date(date_issued)
       @area.issuing_areas(date_issued)
     end
 
@@ -54,6 +56,14 @@ module Identified
     end
 
     private
+
+    def parse_date(date_string)
+      if date_string =~ /\d{4}-\d{2}-\d{2}/
+        Date.parse(date_string)
+      else
+        fail InvalidDateFormatError
+      end
+    end
 
     # Determines if the ssn is one of the handful of abused / always invalid ssns.
     def retired?
