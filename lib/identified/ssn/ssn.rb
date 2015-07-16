@@ -6,13 +6,17 @@ module Identified
 
     attr_reader :date_issued
 
-    def initialize(ssn_string, date_issued: nil)
+    # Date is optional but should be provided to improve validation quality.
+    def initialize(ssn_string, options = {})
       area_num, group_num, serial_num = extract_ssn_values(ssn_string)
 
       @area = AreaNumber.new(area_num)
       @group = GroupNumber.new(group_num)
       @serial = SerialNumber.new(serial_num)
 
+      # Emulating keyword arguments to provide ruby 1.9.3 support.
+      date_issued = options.delete(:date_issued)
+      raise ArgumentError, "Unregonized option(s): #{options}" if options.any?
       @date_issued = parse_date(date_issued) if date_issued
     end
 
@@ -36,9 +40,9 @@ module Identified
       @area.valid?(date_issued) && @group.valid?(area, date_issued) && @serial.valid? && !retired?
     end
 
-    # Provides an array of potential states or protectorates the ssn was issued in. Date is required
-    # because this information cannot be known if it was issued after the randomizaiton date.
-    # Unknown area numbers return [].
+    # Provides an array of potential states or protectorates the ssn was issued in. This information
+    # cannot be known unless an issuance date is known and it before SSN randomizaiton. If no
+    # information is avaliable, issuing_states will return [].
     def issuing_states
       date_issued ? IssuingStateData.issuing_states(area, date_issued) : []
     end

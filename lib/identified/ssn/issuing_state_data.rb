@@ -12,6 +12,7 @@ module Identified
       @issuing_areas_table ||= load_issuing_states_table
       areas = @issuing_areas_table[area_number]
 
+      # Return [] if the issuing areas information doesn't cover the requested area.
       areas ? areas : []
     end
 
@@ -33,7 +34,7 @@ module Identified
     def self.parse_issuing_states(raw_data)
       lookup_table = {}
 
-      # The data is formatted as a range [start]-[end] then the two character state/province code.
+      # The data is formatted as a range [start]-[end] then the two character state / province code.
       raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/).each do |match|
         start_range, end_range, area_id = extract_issuing_state_components(match)
         (start_range..end_range).each do |area_number|

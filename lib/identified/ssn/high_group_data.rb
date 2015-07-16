@@ -7,7 +7,7 @@ module Identified
 
     def self.latest_applicable_list(date_issued)
       @high_group_lists ||= load_data
-      # Fetch the earliest date that is later than the issuance date.
+      # Fetch the earliest date that is on or later than the issuance date.
       @high_group_lists.detect { |list| date_issued <= list.date_effective }
     end
 

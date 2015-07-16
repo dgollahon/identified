@@ -10,7 +10,6 @@ module Identified
     end
 
     # Returns whether the ssn COULD be a valid ssn group code.
-    # When no date is provided, we assume the date issued is post randomization.
     def valid?(area = nil, date_issued = nil)
       # When no date is provided, we assume the date issued is post randomization.
       if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
@@ -52,15 +51,15 @@ module Identified
     def self.generate_index_conversion
       index_table = {}
 
-      # Group numbers are allocated in the order that follows
+      # Group numbers are allocated in the order that follows:
       #  ODD - 01, 03, 05, 07, 09
       #  EVEN - 10 to 98
       #  EVEN - 02, 04, 06, 08
       #  ODD - 11 to 99
-      # See http://www.ssa.gov/history/ssn/geocard.html for details
+      # See http://www.ssa.gov/history/ssn/geocard.html for details.
       allocation_sequence = [*1.step(9, 2), *10.step(98, 2), *2.step(8, 2), *11.step(99, 2)]
 
-      # Build the lookup table (group number => sequence number)
+      # Build the lookup table (group number => sequence number).
       allocation_sequence.each.with_index(1) do |group_number, index|
         index_table[group_number] = index
       end
