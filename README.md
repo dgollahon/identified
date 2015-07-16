@@ -1,5 +1,5 @@
 ![identified](identified_logo.png)
-
+----
 [![Circle CI](https://circleci.com/gh/dgollahon/identified.svg?style=svg)](https://circleci.com/gh/dgollahon/identified)
 
 **identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible.
