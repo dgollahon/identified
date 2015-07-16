@@ -71,6 +71,9 @@ ssn.group # => 45
 ssn.serial # => 6789
 ```
 
+## Requirements
+**identified** supports Ruby 2.0.0+
+
 ## License
 
 **identified** is released under the MIT license. See `LICENSE` for details.
