@@ -4,6 +4,8 @@
 
 Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future. **This method is far from perfect and should only be used as an additional signal, not a complete solution to SSN validation.**
 
+:star: Battle-tested at [BlockScore](https://blockscore.com).
+
 ## Install
 
 Simply run
