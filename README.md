@@ -1,5 +1,7 @@
 ![identified](identified_logo.png)
 
+[![Circle CI](https://circleci.com/gh/dgollahon/identified.svg?style=svg)](https://circleci.com/gh/dgollahon/identified)
+
 **identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible.
 
 Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future. **This method is far from perfect and should only be used as an additional signal, not a complete solution to SSN validation.**
@@ -44,8 +46,10 @@ It is also possible to check against the SSN high group lists to eliminate milli
 ```ruby
 ssn = Identified::SSN.new('012-88-9999')
 
-# The earlier date corresponds to one high group listing, wherease the later
-# corresponds to another high group chart which indicates 88 is now valid.
+# The earlier date causes the group number to be validated with one high group list
+# whereas the later date is associated with another, newer high group list. The
+# second high group list indicates that the group number is in circulation at the
+# time of later date, and thus the SSN is valid.
 earlier_issuance = '2004-03-01'
 later_issuance = '2004-03-02'
 
