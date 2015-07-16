@@ -1,6 +1,7 @@
 module Identified
   class SSN
     RANDOMIZATION_DATE = Date.parse('2011-06-25').freeze
+    RETIRED_SSNS = %w(078-05-1120 219-09-9999)
 
     def initialize(ssn_string)
       area_num, group_num, serial_num = extract_ssn_values(ssn_string)
@@ -67,7 +68,7 @@ module Identified
 
     # Determines if the ssn is one of the handful of abused / always invalid ssns.
     def retired?
-      RETIRED_SSNS.any? { |ssn| ssn == self }
+      RETIRED_SSNS.map { |ssn_string| SSN.new(ssn_string) }.any? { |ssn| ssn == self }
     end
 
     # Returns the integer components of a normalized ssn string.
@@ -86,8 +87,5 @@ module Identified
         fail MalformedSSNError
       end
     end
-
-    # Load all retired ssns at class load. Must be at end of file to use SSN.new.
-    RETIRED_SSNS = [SSN.new('078-05-1120'), SSN.new('219-09-9999')]
   end
 end
