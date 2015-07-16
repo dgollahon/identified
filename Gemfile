@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec name: 'identified'
 
+gem 'rake', '~> 10.4'
+
 group :metrics do
   # Dev tools
   gem 'devtools', git: 'https://github.com/rom-rb/devtools.git'
