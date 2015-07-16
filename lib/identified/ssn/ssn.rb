@@ -4,12 +4,16 @@ module Identified
     RANDOMIZATION_DATE = Date.parse('2011-06-25').freeze
     RETIRED_SSNS = %w(078-05-1120 219-09-9999)
 
-    def initialize(ssn_string)
+    attr_reader :date_issued
+
+    def initialize(ssn_string, date_issued: nil)
       area_num, group_num, serial_num = extract_ssn_values(ssn_string)
 
       @area = AreaNumber.new(area_num)
       @group = GroupNumber.new(group_num)
       @serial = SerialNumber.new(serial_num)
+
+      @date_issued = parse_date(date_issued) if date_issued
     end
 
     # The first three digits of the ssn.
@@ -28,28 +32,15 @@ module Identified
     end
 
     # Returns whether the ssn COULD be a valid ssn.
-    # When no date is provided, we assume the date issued is post randomization.
-    def valid?(date_issued: nil)
-      if date_issued
-        date_issued = parse_date(date_issued)
-        @area.valid?(date_issued: date_issued) \
-        && @group.valid?(area: area, date_issued: date_issued) \
-        && @serial.valid? \
-        && !retired?
-      else
-        @area.valid? && @group.valid? && @serial.valid? && !retired?
-      end
+    def valid?
+      @area.valid?(date_issued) && @group.valid?(area, date_issued) && @serial.valid? && !retired?
     end
 
     # Provides an array of potential states or protectorates the ssn was issued in. Date is required
     # because this information cannot be known if it was issued after the randomizaiton date.
     # Unknown area numbers return [].
-    def issuing_areas(date_issued: nil)
-      fail ArgumentError, 'Missing keyword: date_issued' unless date_issued
-
-      date_issued = parse_date(date_issued)
-
-      @area.issuing_areas(date_issued)
+    def issuing_states
+      date_issued ? IssuingStateData.issuing_states(area, date_issued) : []
     end
 
     def ==(other)

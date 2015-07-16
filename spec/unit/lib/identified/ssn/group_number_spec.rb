@@ -55,7 +55,7 @@ module Identified
               high_group = high_groups[index]
               1.upto(high_group - 1) do |group_number|
                 group = GroupNumber.new(group_number)
-                expect(group.valid?(area: area, date_issued: date_issued)).to eq true
+                expect(group.valid?(area, date_issued)).to eq true
               end
             end
           end
@@ -66,7 +66,7 @@ module Identified
             areas.each_with_index do |area, index|
               high_group = high_groups[index]
               group = GroupNumber.new(high_group)
-              expect(group.valid?(area: area, date_issued: date_issued)).to eq true
+              expect(group.valid?(area, date_issued)).to eq true
             end
           end
         end
@@ -77,7 +77,7 @@ module Identified
               high_group = high_groups[index]
               (high_group + 1).upto(99) do |group_number|
                 group = GroupNumber.new(group_number)
-                expect(group.valid?(area: area, date_issued: date_issued)).to eq false
+                expect(group.valid?(area, date_issued)).to eq false
               end
             end
           end
@@ -96,7 +96,7 @@ module Identified
               high_group = high_groups[index]
               1.upto(high_group - 1) do |group_number|
                 group = GroupNumber.new(group_number)
-                expect(group.valid?(area: area, date_issued: date_issued)).to eq true
+                expect(group.valid?(area, date_issued)).to eq true
               end
             end
           end
@@ -107,7 +107,7 @@ module Identified
             areas.each_with_index do |area, index|
               high_group = high_groups[index]
               group = GroupNumber.new(high_group)
-              expect(group.valid?(area: area, date_issued: date_issued)).to eq true
+              expect(group.valid?(area, date_issued)).to eq true
             end
           end
         end
@@ -118,7 +118,7 @@ module Identified
               high_group = high_groups[index]
               (high_group + 1).upto(99) do |group_number|
                 group = GroupNumber.new(group_number)
-                expect(group.valid?(area: area, date_issued: date_issued)).to eq false
+                expect(group.valid?(area, date_issued)).to eq false
               end
             end
           end

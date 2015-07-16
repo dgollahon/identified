@@ -11,7 +11,7 @@ module Identified
 
     # Returns whether the ssn COULD be a valid ssn group code.
     # When no date is provided, we assume the date issued is post randomization.
-    def valid?(area: nil, date_issued: nil)
+    def valid?(area = nil, date_issued = nil)
       # When no date is provided, we assume the date issued is post randomization.
       if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
         (1..99).include?(value)

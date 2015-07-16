@@ -40,28 +40,20 @@ module Identified
     end
 
     describe '#issuing_areas' do
-      it 'should fail with an invalid date string' do
-        expect { SSN.new('123-01-0001').issuing_areas(date_issued: '01-01-1968') }.to raise_error InvalidDateFormatError
-      end
-
       context 'prior to randomization' do
         it "123-01-0001 should be ['NY']" do
-          expect(SSN.new('123-01-0001').issuing_areas(date_issued: '1968-01-01')).to eq ['NY']
+          expect(SSN.new('123-01-0001', date_issued: '1968-01-01').issuing_states).to eq ['NY']
         end
       end
 
       context 'after randomization' do
-        it "123-01-0001 should be ['NY']" do
-          expect(SSN.new('123-01-0001').issuing_areas(date_issued: SSN::RANDOMIZATION_DATE.to_s)).to eq []
+        it "123-01-0001 should be []" do
+          expect(SSN.new('123-01-0001', date_issued: SSN::RANDOMIZATION_DATE.to_s).issuing_states).to eq []
         end
       end
     end
 
     describe '#valid?' do
-      it 'should fail with an invalid date string' do
-        expect { SSN.new('123-01-0001').valid?(date_issued: '01-01-1968') }.to raise_error InvalidDateFormatError
-      end
-
       it 'should be false with permanently invalid ssns' do
         ALWAYS_INVALID.each do |ssn|
           expect(ssn.valid?).to eq false

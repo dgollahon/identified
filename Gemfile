@@ -12,3 +12,32 @@ end
 group :development do
   gem 'pry', '~> 0.10'
 end
+
+group :guard do
+  # Filewatcher and runner
+  gem 'guard', '~> 2.12.4'
+
+  # Autorun documentation critic
+  gem 'guard-inch', '~> 0.1'
+
+  # Autogen docs
+  gem 'guard-yard', '~> 2.1'
+
+  # Autorun style critic
+  gem 'guard-rubocop', '~> 1.2'
+
+  # Autorun codesmell critic
+  gem 'guard-reek', '= 0.0.2', github: 'backus/guard-reek'
+
+  # Autorun similar code critic
+  gem 'guard-flay', '= 0.0.3', github: 'backus/guard-flay'
+
+  # Autorun painful code critic
+  gem 'guard-flog', '= 0.0.4', github: 'backus/guard-flog'
+
+  # Autorun specs
+  gem 'guard-rspec', '~> 4.6'
+
+  # rebundle
+  gem 'guard-bundler', '~> 2.1'
+end
