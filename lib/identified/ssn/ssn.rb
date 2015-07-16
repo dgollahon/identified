@@ -7,13 +7,16 @@ module Identified
     attr_reader :date_issued
 
     # Date is optional but should be provided to improve validation quality.
-    def initialize(ssn_string, date_issued: nil)
+    def initialize(ssn_string, options = {})
       area_num, group_num, serial_num = extract_ssn_values(ssn_string)
 
       @area = AreaNumber.new(area_num)
       @group = GroupNumber.new(group_num)
       @serial = SerialNumber.new(serial_num)
 
+      # Emulating keyword arguments to provide ruby 1.9.3 support.
+      date_issued = options.delete(:date_issued)
+      raise ArgumentError, "Unregonized option(s): #{options}" if options.any?
       @date_issued = parse_date(date_issued) if date_issued
     end
 

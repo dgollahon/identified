@@ -79,7 +79,7 @@ ssn.serial # => 6789
 ```
 
 ## Requirements
-`identified` supports Ruby 2.0.0+
+`identified` supports Ruby 1.9.3+
 
 ## License
 
