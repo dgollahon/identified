@@ -13,6 +13,7 @@ module Identified
       raw_data_file.close
     end
 
+    # The highest group that has been issued for a given area.
     def high_group(area)
       high_groups[area]
     end

@@ -9,7 +9,6 @@ module Identified
     end
 
     # Returns whether the ssn COULD be a valid ssn area code.
-    # When no date is provided, we assume the date issued is post randomization.
     def valid?(date_issued = nil)
       # When date is not present assume post randomization
       if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
