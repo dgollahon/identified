@@ -1,8 +1,8 @@
 ![identified](identified_logo.png)
 
-**identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data.
+**identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible.
 
-Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future.
+Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future. **This method is far from perfect and should only be used as an additional signal, not a complete solution to SSN validation.**
 
 ## Install
 
