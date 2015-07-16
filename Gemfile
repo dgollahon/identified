@@ -27,7 +27,7 @@ group :guard do
   gem 'guard-rubocop', '~> 1.2'
 
   # Autorun codesmell critic
-  gem 'guard-reek', '= 0.0.2', github: 'backus/guard-reek'
+  gem 'guard-reek', '= 0.0.3', github: 'backus/guard-reek'
 
   # Autorun similar code critic
   gem 'guard-flay', '= 0.0.3', github: 'backus/guard-flay'

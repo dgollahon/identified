@@ -23,7 +23,7 @@ end
 
 group :critique do
   # Critique code smells
-  guard 'reek' do
+  guard :reek, cli: %w(-c config/reek.yml), run_all_with: ['lib'] do
     watch(%r{.+\.rb$})
   end
 
