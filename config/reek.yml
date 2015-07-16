@@ -1,6 +1,6 @@
 ---
 Attribute:
-  enabled: true
+  enabled: false
   exclude: []
 BooleanParameter:
   enabled: true
@@ -25,19 +25,22 @@ FeatureEnvy:
   enabled: true
   exclude: []
 IrresponsibleModule:
-  enabled: false
+  enabled: true
   exclude: []
 LongParameterList:
   enabled: true
   exclude: []
-  max_params: 2
+  max_params: 3
   overrides:
     initialize:
-      max_params: 3
+      max_params: 5
 LongYieldList:
   enabled: true
   exclude: []
-  max_params: 2
+  max_params: 3
+ModuleInitialize:
+  enabled: true
+  exclude: []
 NestedIterators:
   enabled: true
   exclude: []
@@ -46,23 +49,26 @@ NestedIterators:
 NilCheck:
   enabled: true
   exclude: []
+PrimaDonnaMethod:
+  enabled: true
+  exclude: []
 RepeatedConditional:
   enabled: true
   exclude: []
-  max_ifs: 1
+  max_ifs: 2
 TooManyInstanceVariables:
   enabled: true
   exclude: []
-  max_instance_variables: 3
+  max_instance_variables: 9
 TooManyMethods:
   enabled: true
   exclude: []
-  max_methods: 10
+  max_methods: 25
 TooManyStatements:
   enabled: true
   exclude:
-  - each
-  max_statements: 2
+  - initialize
+  max_statements: 5
 UncommunicativeMethodName:
   enabled: true
   exclude: []
@@ -103,4 +109,3 @@ UnusedParameters:
 UtilityFunction:
   enabled: true
   exclude: []
-  max_helper_calls: 0
