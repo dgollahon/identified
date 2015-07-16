@@ -42,8 +42,11 @@ module Identified
 
     # Provides an array of potential states or protectorates the ssn was issued in. Date is required because this
     # information cannot be known if it was issued after the randomizaiton date. Unknown area numbers return [].
-    def issuing_areas(date_issued:)
+    def issuing_areas(date_issued: nil)
+      fail ArgumentError, 'Missing keyword: date_issued' unless date_issued
+
       date_issued = parse_date(date_issued)
+      
       @area.issuing_areas(date_issued)
     end
 
