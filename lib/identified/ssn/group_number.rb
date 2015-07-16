@@ -24,8 +24,8 @@ module Identified
       sequential_value <=> other.sequential_value
     end
 
-    # The index of the allocation sequence. 1 indicates the 1st group number issued. 70 indicates the 70th group number
-    # issued, etc. Values will be between 1 and 100.
+    # The index of the allocation sequence. 1 indicates the 1st group number issued. 70 indicates
+    # the 70th group number issued, etc. Values will be between 1 and 100.
     def sequential_value
       self.class.convert_to_sequential_number(value)
     end
@@ -40,7 +40,8 @@ module Identified
       value <= high_group
     end
 
-    # Converts a group number to the index of the sequence of its allocation. Valid return values are between 1 and 100.
+    # Converts a group number to the index of the sequence of its allocation. Valid return values
+    # are between 1 and 100.
     def self.convert_to_sequential_number(group_number)
       @group_index_table ||= generate_index_conversion
       @group_index_table[group_number]
@@ -56,7 +57,7 @@ module Identified
       #  EVEN - 02, 04, 06, 08
       #  ODD - 11 to 99
       # See http://www.ssa.gov/history/ssn/geocard.html for details
-      allocation_sequence = [*1.step(9,2), *10.step(98,2), *2.step(8,2), *11.step(99,2)]
+      allocation_sequence = [*1.step(9, 2), *10.step(98, 2), *2.step(8, 2), *11.step(99, 2)]
 
       # Build the lookup table (group number => sequence number)
       allocation_sequence.each.with_index(1) do |group_number, index|

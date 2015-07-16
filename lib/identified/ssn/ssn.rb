@@ -46,7 +46,7 @@ module Identified
       fail ArgumentError, 'Missing keyword: date_issued' unless date_issued
 
       date_issued = parse_date(date_issued)
-      
+
       @area.issuing_areas(date_issued)
     end
 
@@ -56,7 +56,7 @@ module Identified
 
     # Uses '123-45-6789' format.
     def to_s
-      sprintf('%.03d-%.02d-%.04d', area, group, serial)
+      format('%.03d-%.02d-%.04d', area, group, serial)
     end
 
     private

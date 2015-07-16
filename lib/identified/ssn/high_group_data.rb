@@ -12,8 +12,8 @@ module Identified
       @high_group_lists.detect { |list| date_issued <= list.date_effective }
     end
 
-    # Loads all high group lists into memory. The data is sorted in increasing order by the date the high group list was
-    # effective on.
+    # Loads all high group lists into memory. The data is sorted in increasing order by the date the
+    # high group list was effective on.
     def self.load_data
       unordered_data = Dir['data/ssn/high_groups/*.txt'].map { |filename| HighGroupList.new(filename) }
       unordered_data.sort_by!(&:date_effective)

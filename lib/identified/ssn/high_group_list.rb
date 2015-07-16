@@ -2,7 +2,7 @@
 
 module Identified
   class HighGroupList
-    attr_reader :date_effective
+    attr_reader :date_effective, :high_groups
 
     def initialize(filename)
       raw_data_file = File.open(filename, 'r')
@@ -15,16 +15,12 @@ module Identified
     end
 
     def high_group(area)
-      @high_groups[area]
-    end
-
-    def all
-      @high_groups
+      high_groups[area]
     end
 
     # Searches the raw for the effective date.
     def parse_date(raw_data)
-      raw_date = raw_data.match(/HIGHEST GROUP ISSUED AS OF (\d+\/\d{2}\/\d{2})/)[1]
+      raw_date = raw_data.match(%r(HIGHEST GROUP ISSUED AS OF (\d+/\d{2}/\d{2})))[1]
 
       day, month, year = extract_date_elements(raw_date)
 
@@ -54,7 +50,7 @@ module Identified
       lookup_table
     end
 
-    # Provides the integer versions of the high group data in a way that's easy to do mass-assignment.
+    # Provides the integer versions of the high group data in for easy mass-assignment.
     def extract_high_group_elements(high_group_tuple)
       high_group_tuple.map(&:to_i)
     end

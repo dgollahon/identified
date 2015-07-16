@@ -13,7 +13,7 @@ doc.css('a').each do |link|
       puts 'Writing: ' + file_name
       File.open("data/ssn/high_groups/#{file_name}", 'w') do |file|
         downloaded_file = open('http://www.ssa.gov/employer/' + link['href'])
-        file.write(downloaded_file.read())
+        file.write(downloaded_file.read)
       end
     rescue => ex
       puts 'ERROR! Could not download high group data: ' + ex.to_s
