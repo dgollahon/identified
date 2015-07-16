@@ -88,6 +88,6 @@ module Identified
     end
 
     # Load all retired ssns at class load. Must be at end of file to use SSN.new.
-    RETIRED_SSNS = %w(078-05-1120 219-09-9999).map { |ssn| SSN.new(ssn) }.freeze
+    RETIRED_SSNS = [SSN.new('078-05-1120'), SSN.new('219-09-9999')]
   end
 end
