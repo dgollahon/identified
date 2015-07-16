@@ -1,6 +1,5 @@
-# An in-memory representation of a textual high group list.
-
 module Identified
+  # An in-memory representation of a textual high group list.
   class HighGroupList
     attr_reader :date_effective, :high_groups
 

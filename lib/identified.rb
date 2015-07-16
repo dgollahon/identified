@@ -11,5 +11,6 @@ require_relative 'identified/ssn/high_group_list'
 require_relative 'identified/ssn/high_group_data'
 require_relative 'identified/ssn/ssn'
 
+# A module for validating government document identifiers (like SSNs) with ease.
 module Identified
 end

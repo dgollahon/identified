@@ -1,4 +1,6 @@
 module Identified
+  # Represents the area number of an SSN. Also performs pre or post randomization validation
+  # depending on an issuance date is provided.
   class AreaNumber
     attr_reader :value
 

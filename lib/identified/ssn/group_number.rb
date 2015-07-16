@@ -1,4 +1,5 @@
 module Identified
+  # Represents the group number of an SSN and performs group number validation.
   class GroupNumber
     include Comparable
 

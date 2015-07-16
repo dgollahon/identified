@@ -1,4 +1,5 @@
 module Identified
+  # Represents the serial number of an SSN and performs simple validation.
   class SerialNumber
     attr_reader :value
 

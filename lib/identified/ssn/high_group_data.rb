@@ -1,6 +1,5 @@
-# The module that provides access to set of all high group data available.
-
 module Identified
+  # The module that provides access to set of all high group data available.
   module HighGroupData
     def self.all
       @high_group_lists ||= load_data
@@ -15,8 +14,9 @@ module Identified
     # Loads all high group lists into memory. The data is sorted in increasing order by the date the
     # high group list was effective on.
     def self.load_data
-      unordered_data = Dir['data/ssn/high_groups/*.txt'].map { |filename| HighGroupList.new(filename) }
-      unordered_data.sort_by!(&:date_effective)
+      Dir['data/ssn/high_groups/*.txt']
+        .map { |filename| HighGroupList.new(filename) }
+        .sort_by!(&:date_effective)
     end
   end
 end

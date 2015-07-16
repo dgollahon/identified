@@ -1,4 +1,5 @@
 module Identified
+  # Represents a Social Security Number and provides validation functionality.
   class SSN
     RANDOMIZATION_DATE = Date.parse('2011-06-25').freeze
     RETIRED_SSNS = %w(078-05-1120 219-09-9999)
@@ -40,8 +41,9 @@ module Identified
       end
     end
 
-    # Provides an array of potential states or protectorates the ssn was issued in. Date is required because this
-    # information cannot be known if it was issued after the randomizaiton date. Unknown area numbers return [].
+    # Provides an array of potential states or protectorates the ssn was issued in. Date is required
+    # because this information cannot be known if it was issued after the randomizaiton date.
+    # Unknown area numbers return [].
     def issuing_areas(date_issued: nil)
       fail ArgumentError, 'Missing keyword: date_issued' unless date_issued
 
