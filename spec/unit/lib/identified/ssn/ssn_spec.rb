@@ -72,7 +72,11 @@ module Identified
         end
       end
 
-      it 'should be invalid with an invalid area' do
+      it 'should be invalid with an invalid area before randomization' do
+        expect(SSN.new('773-45-6789', date_issued: '2011-06-24').valid?).to be false
+      end
+
+      it 'should be invalid with an invalid area after randomization' do
         expect(SSN.new('000-45-6789').valid?).to be false
       end
 
@@ -82,6 +86,21 @@ module Identified
 
       it 'should be invalid with an invalid serial' do
         expect(SSN.new('123-45-0000').valid?).to be false
+      end
+
+      context 'when on the boundary of a high group list change' do
+        let(:earlier_issuance) { '2004-03-01' }
+        let(:later_issuance) { '2004-03-02' }
+
+        it 'should be invalid before the change [README example]' do
+          ssn = Identified::SSN.new('012-88-9999', date_issued: earlier_issuance)
+          expect(ssn.valid?).to be false
+        end
+
+        it 'should be valid after the change [README example]' do
+          ssn = Identified::SSN.new('012-88-9999', date_issued: later_issuance)
+          expect(ssn.valid?).to be true
+        end
       end
     end
 

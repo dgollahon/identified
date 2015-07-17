@@ -19,7 +19,7 @@ module Identified
 
     # Searches the raw for the effective date.
     def parse_date(raw_data)
-      raw_date = %r(HIGHEST GROUP ISSUED AS OF (?<date>\d+/\d{2}/\d{2})).match(raw_data)[:date]
+      raw_date = %r(HIGHEST GROUP ISSUED AS OF (?<date>\d{1,2}/\d{2}/\d{2})).match(raw_data)[:date]
 
       day, month, year = extract_date_elements(raw_date)
 

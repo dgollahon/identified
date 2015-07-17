@@ -48,7 +48,7 @@ module Identified
     end
 
     def ==(other)
-      area == other.area && group == other.group && serial == other.serial
+      area.equal?(other.area) && group.equal?(other.group) && serial.equal?(other.serial)
     end
 
     # Uses '123-45-6789' format.
@@ -82,7 +82,7 @@ module Identified
       if ssn_string =~ /\A\d{3}-\d{2}-\d{4}\Z/
         ssn_string
       elsif ssn_string =~ /\A\d{9}\Z/
-        "#{ssn_string[0..2]}-#{ssn_string[3..4]}-#{ssn_string[5..8]}"
+        "#{ssn_string[0..2]}-#{ssn_string[3..4]}-#{ssn_string[5..-1]}"
       else
         fail MalformedSSNError
       end
