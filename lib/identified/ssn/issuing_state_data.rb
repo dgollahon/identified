@@ -20,14 +20,10 @@ module Identified
     def self.load_issuing_states_table
       # Data originally taken from http://www.socialsecurity.gov/employer/stateweb.htm. The file
       # this reads was transformed slightly from the original to make it less cumbersome to parse.
-      raw_data_file = File.open('data/ssn/area_data.txt', 'r')
-      raw_data = raw_data_file.read
+      raw_data = File.read('data/ssn/area_data.txt')
 
-      issuing_states_table = parse_issuing_states(raw_data)
-
-      raw_data_file.close
-
-      issuing_states_table
+      # issuing_states_table = parse_issuing_states(raw_data)
+      parse_issuing_states(raw_data)
     end
 
     # Parses the issuing areas file contents and converts the data into a lookup table.
@@ -35,7 +31,7 @@ module Identified
       lookup_table = {}
 
       # The data is formatted as a range [start]-[end] then the two character state / province code.
-      raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/).each do |match|
+      raw_data.scan(/(\d{3})-(\d{3})\s(\w{2})/) do |match|
         start_range, end_range, area_id = extract_issuing_state_components(match)
         (start_range..end_range).each do |area_number|
           lookup_table[area_number] ||= []

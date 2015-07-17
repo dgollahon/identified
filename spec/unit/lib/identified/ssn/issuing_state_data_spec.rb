@@ -2,6 +2,8 @@ module Identified
   describe IssuingStateData do
     describe '.issuing_areas' do
       let(:pre_randomization_date) { Date.parse('2011-06-24') }
+      let(:randomization_date) { Date.parse('2011-06-25') }
+      let(:post_randomization_date) { Date.parse('2011-06-26') }
 
       context 'prior to randomization' do
         it "123 should be ['NY']" do
@@ -20,7 +22,9 @@ module Identified
       context 'after randomization' do
         it 'all areas should be unknown ([])' do
           (1..999).each do |area|
-            expect(IssuingStateData.issuing_states(area, SSN::RANDOMIZATION_DATE)).to eq []
+            expect(IssuingStateData.issuing_states(area, nil)).to eq []
+            expect(IssuingStateData.issuing_states(area, randomization_date)).to eq []
+            expect(IssuingStateData.issuing_states(area, post_randomization_date)).to eq []
           end
         end
       end

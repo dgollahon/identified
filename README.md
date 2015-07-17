@@ -69,7 +69,7 @@ You can also often find out which state / province issued the SSN as long as the
 
 ```ruby
 ssn = Identified::SSN.new('123-45-6789', date_issued: '1985-10-26')
-ssn.issuing_areas # => ['NY']
+ssn.issuing_states # => ['NY']
 ```
 
 Additionally, you can access each component field of the SSN as follows:

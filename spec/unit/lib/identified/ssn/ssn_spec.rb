@@ -32,6 +32,14 @@ module Identified
         expect(ssn.serial).to eq 6789
       end
 
+      it 'should fail with a malformed date string' do
+        expect { Identified::SSN.new('123-45-6789', date_issued: '01-01-1999') }.to raise_error InvalidDateFormatError
+      end
+
+      it 'should not allow invalid options' do
+        expect { Identified::SSN.new('123-45-6789', dat_issued: '1985-10-26') }.to raise_error ArgumentError, 'Unrecgonized option(s): {:dat_issued=>"1985-10-26"}'
+      end
+
       it 'should fail with malformed ssns' do
         MALFORMED_SSNS.each do |ssn_string|
           expect { Identified::SSN.new(ssn_string) }.to raise_error MalformedSSNError
@@ -51,13 +59,29 @@ module Identified
           expect(SSN.new('123-01-0001', date_issued: SSN::RANDOMIZATION_DATE.to_s).issuing_states).to eq []
         end
       end
+
+      it 'should return [] when no date is provided' do
+        expect(SSN.new('123-45-6789').issuing_states).to eq []
+      end
     end
 
     describe '#valid?' do
       it 'should be false with permanently invalid ssns' do
         ALWAYS_INVALID.each do |ssn|
-          expect(ssn.valid?).to eq false
+          expect(ssn.valid?).to be false
         end
+      end
+
+      it 'should be invalid with an invalid area' do
+        expect(SSN.new('000-45-6789').valid?).to be false
+      end
+
+      it 'should be invalid with an invalid group' do
+        expect(SSN.new('123-00-6789').valid?).to be false
+      end
+
+      it 'should be invalid with an invalid serial' do
+        expect(SSN.new('123-45-0000').valid?).to be false
       end
     end
 
@@ -65,6 +89,36 @@ module Identified
       it 'should output the correct format' do
         ssn = SSN.new('123456789')
         expect(ssn.to_s).to eq '123-45-6789'
+      end
+    end
+
+    describe '#==' do
+      it 'should be true for equivalent ssns' do
+        expect(SSN.new('123456789')).to eq SSN.new('123-45-6789')
+      end
+
+      it 'should be false for different areas' do
+        expect(SSN.new('123456789')).not_to eq SSN.new('122-45-6789')
+      end
+
+      it 'should be false for different groups' do
+        expect(SSN.new('123456789')).not_to eq SSN.new('123-44-6789')
+      end
+
+      it 'should be false for different serials' do
+        expect(SSN.new('123456789')).not_to eq SSN.new('123-45-6780')
+      end
+    end
+
+    describe '#retired?' do
+      it 'should be true with retired ssns' do
+        RETIRED_SSNS.map { |ssn| SSN.new(ssn) }.each do |ssn|
+          expect(ssn.send(:retired?)).to be true
+        end
+      end
+
+      it 'should be false with other ssns' do
+        expect(SSN.new('123-45-6789').send(:retired?)).to be false
       end
     end
   end

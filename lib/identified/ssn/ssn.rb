@@ -16,7 +16,7 @@ module Identified
 
       # Emulating keyword arguments to provide ruby 1.9.3 support.
       date_issued = options.delete(:date_issued)
-      fail ArgumentError, "Unregonized option(s): #{options}" if options.any?
+      fail ArgumentError, "Unrecgonized option(s): #{options}" if options.any?
       @date_issued = parse_date(date_issued) if date_issued
     end
 
@@ -44,7 +44,7 @@ module Identified
     # cannot be known unless an issuance date is known and it before SSN randomizaiton. If no
     # information is avaliable, issuing_states will return [].
     def issuing_states
-      date_issued ? IssuingStateData.issuing_states(area, date_issued) : []
+      IssuingStateData.issuing_states(area, date_issued)
     end
 
     def ==(other)
