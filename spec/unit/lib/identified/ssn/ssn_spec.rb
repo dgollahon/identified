@@ -32,10 +32,6 @@ module Identified
         expect(ssn.serial).to eq 6789
       end
 
-      it 'should fail with a malformed date string' do
-        expect { Identified::SSN.new('123-45-6789', date_issued: '01-01-1999') }.to raise_error InvalidDateFormatError
-      end
-
       it 'should not allow invalid options' do
         expect { Identified::SSN.new('123-45-6789', dat_issued: '1985-10-26') }.to raise_error ArgumentError, 'Unrecgonized option(s): {:dat_issued=>"1985-10-26"}'
       end
@@ -50,13 +46,13 @@ module Identified
     describe '#issuing_areas' do
       context 'prior to randomization' do
         it "123-01-0001 should be ['NY']" do
-          expect(SSN.new('123-01-0001', date_issued: '1968-01-01').issuing_states).to eq ['NY']
+          expect(SSN.new('123-01-0001', date_issued: Date.parse('1968-01-01')).issuing_states).to eq ['NY']
         end
       end
 
       context 'after randomization' do
         it "123-01-0001 should be []" do
-          expect(SSN.new('123-01-0001', date_issued: SSN::RANDOMIZATION_DATE.to_s).issuing_states).to eq []
+          expect(SSN.new('123-01-0001', date_issued: SSN::RANDOMIZATION_DATE).issuing_states).to eq []
         end
       end
 
@@ -73,7 +69,7 @@ module Identified
       end
 
       it 'should be invalid with an invalid area before randomization' do
-        expect(SSN.new('773-45-6789', date_issued: '2011-06-24').valid?).to be false
+        expect(SSN.new('773-45-6789', date_issued: Date.parse('2011-06-24')).valid?).to be false
       end
 
       it 'should be invalid with an invalid area after randomization' do
@@ -89,8 +85,8 @@ module Identified
       end
 
       context 'when on the boundary of a high group list change' do
-        let(:earlier_issuance) { '2004-03-01' }
-        let(:later_issuance) { '2004-03-02' }
+        let(:earlier_issuance) { Date.parse('2004-03-01') }
+        let(:later_issuance) { Date.parse('2004-03-02') }
 
         it 'should be invalid before the change [README example]' do
           ssn = Identified::SSN.new('012-88-9999', date_issued: earlier_issuance)

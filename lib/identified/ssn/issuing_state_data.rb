@@ -10,10 +10,9 @@ module Identified
       return [] if !date_issued || date_issued >= SSN::RANDOMIZATION_DATE
 
       @issuing_areas_table ||= load_issuing_states_table
-      areas = @issuing_areas_table[area_number]
 
       # Return [] if the issuing areas information doesn't cover the requested area.
-      areas ? areas : []
+      @issuing_areas_table.fetch(area_number, [])
     end
 
     # Loads the lookup table for going from area # => state / province code

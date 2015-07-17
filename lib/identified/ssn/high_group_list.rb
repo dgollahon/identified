@@ -39,19 +39,9 @@ module Identified
 
     # Loads high groups into a hash table that is indexed by area.
     def parse_high_groups(raw_data)
-      lookup_table = {}
-
-      raw_data.scan(/(\d{3})\s+(\d{2})/) do |match|
-        area, group = extract_high_group_elements(match)
-        lookup_table[area] = group
+      raw_data.scan(/(\d{3})\s+(\d{2})/).to_enum.with_object({}) do |(area, group), table|
+        table[area.to_i] = group.to_i
       end
-
-      lookup_table
-    end
-
-    # Provides the integer versions of the high group data in for easy mass-assignment.
-    def extract_high_group_elements(high_group_tuple)
-      high_group_tuple.map(&:to_i)
     end
   end
 end

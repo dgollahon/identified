@@ -31,10 +31,10 @@ Creating a new SSN to validate:
 
 ```ruby
 # SSN formatted With dashes. Note that the date must be in `yyyy-mm-dd` format.
-ssn = Identified::SSN.new('123-45-6789', date_issued: '1985-10-26')
+ssn = Identified::SSN.new('123-45-6789', date_issued: Date.parse('1985-10-26'))
 
 # SSN formatted without dashes. In either case ssn.to_s will return '123-45-6789'.
-ssn = Identified::SSN.new('123456789', date_issued: '1985-10-26')
+ssn = Identified::SSN.new('123456789', date_issued: Date.parse('1985-10-26'))
 
 # If the date of issuance is unknown, it can be elided.
 # This will, however, notably reduce validation quality.
@@ -55,8 +55,8 @@ If the date of issuance is known, identified will check the number against the S
 # whereas the later date is associated with another, newer high group list. The
 # second high group list indicates that the group number is in circulation at the
 # time of later date, and thus the SSN is valid.
-earlier_issuance = '2004-03-01'
-later_issuance = '2004-03-02'
+earlier_issuance = Date.parse('2004-03-01')
+later_issuance = Date.parse('2004-03-02')
 
 ssn = Identified::SSN.new('012-88-9999', date_issued: earlier_issuance)
 ssn.valid? # => false, that number could not have possibly been issued on that date.
@@ -68,7 +68,7 @@ ssn.valid? # => true, that number is potentially valid
 You can also often find out which state / province issued the SSN as long as the issuance date is prior to SSN randomization. If the issuing state cannot be determined (which is always true if the SSN was issued after the randomization date), an empty array will be returned.
 
 ```ruby
-ssn = Identified::SSN.new('123-45-6789', date_issued: '1985-10-26')
+ssn = Identified::SSN.new('123-45-6789', date_issued: Date.parse('1985-10-26'))
 ssn.issuing_states # => ['NY']
 ```
 
