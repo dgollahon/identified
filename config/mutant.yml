@@ -1,3 +1,4 @@
 ---
 name: identified
 namespace: Identified
+ignore_subjects: ['Identified::SequentialGroupNumber.allocation_sequence']

@@ -26,6 +26,13 @@ module Identified
         expect(allocation_sequence[50..53].all? { |x| x.even? }).to be true
         expect(allocation_sequence[54..99].all? { |x| x.odd? }).to be true
       end
+
+      it 'should have correct subranges' do
+        expect(allocation_sequence[0..4].all? { |x| (1..9).include?(x) }).to be true
+        expect(allocation_sequence[5..49].all? { |x| (10..98).include?(x) }).to be true
+        expect(allocation_sequence[50..53].all? { |x| (2..8).include?(x) }).to be true
+        expect(allocation_sequence[54..99].all? { |x| (11..99).include?(x) }).to be true
+      end
     end
 
     # Allocation order reference
