@@ -31,8 +31,8 @@ module Identified
       lookup_table = {}
 
       # The data is formatted as a range [start]-[end] then the two character state / province code.
-      raw_data.scan(ISSUING_STATE_ENTRY_REGEX) do |(start_area, end_area, state_code)|
-        (start_area.to_i).upto(end_area.to_i).each do |area_number|
+      raw_data.scan(ISSUING_STATE_ENTRY_REGEX) do |start_area, end_area, state_code|
+        (start_area.to_i).upto(end_area.to_i) do |area_number|
           lookup_table[area_number] ||= []
           lookup_table[area_number] << state_code
         end

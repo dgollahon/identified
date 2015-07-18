@@ -21,14 +21,6 @@ module Identified
     def self.generate_index_conversion
       index_table = {}
 
-      # Group numbers are allocated in the order that follows:
-      #  ODD - 01, 03, 05, 07, 09
-      #  EVEN - 10 to 98
-      #  EVEN - 02, 04, 06, 08
-      #  ODD - 11 to 99
-      # See http://www.ssa.gov/history/ssn/geocard.html for details.
-      allocation_sequence = [*(1..9).step(2), *(10..98).step(2), *(2..8).step(2), *(11..99).step(2)]
-
       # Build the lookup table (group number => sequence number).
       allocation_sequence.each.with_index(1) do |group_number, index|
         index_table[group_number] = index
@@ -37,5 +29,16 @@ module Identified
       index_table
     end
     private_class_method :generate_index_conversion
+
+    def self.allocation_sequence
+      # Group numbers are allocated in the order that follows:
+      #  ODD - 01, 03, 05, 07, 09
+      #  EVEN - 10 to 98
+      #  EVEN - 02, 04, 06, 08
+      #  ODD - 11 to 99
+      # See http://www.ssa.gov/history/ssn/geocard.html for details.
+      [*(1..9).step(2), *(10..98).step(2), *(2..8).step(2), *(11..99).step(2)]
+    end
+    private_class_method :allocation_sequence
   end
 end

@@ -3,9 +3,25 @@ require 'spec_helper'
 module Identified
   describe SequentialGroupNumber do
     describe '.generate_index_conversion' do
+      let(:index_conversion) { SequentialGroupNumber.send(:generate_index_conversion) }
+
       it 'should produce 99 elements' do
-        expect(SequentialGroupNumber.send(:generate_index_conversion).keys.length).to eq 99
-        expect(SequentialGroupNumber.send(:generate_index_conversion).values.length).to eq 99
+        expect(index_conversion.values).to eq (1..99).to_a
+        expect(index_conversion.keys.length).to eq 99
+      end
+    end
+
+    describe '.allocation_sequence' do
+      let(:allocation_sequence) { SequentialGroupNumber.send(:allocation_sequence) }
+      it 'should produce 99 elements' do
+        expect(allocation_sequence.length).to eq 99
+      end
+
+      it 'should follow the pattern odd, even, even, odd' do
+        expect(allocation_sequence[0..4].all? { |x| x.odd? }).to be true
+        expect(allocation_sequence[5..49].all? { |x| x.even? }).to be true
+        expect(allocation_sequence[50..53].all? { |x| x.even? }).to be true
+        expect(allocation_sequence[54..99].all? { |x| x.odd? }).to be true
       end
     end
 
