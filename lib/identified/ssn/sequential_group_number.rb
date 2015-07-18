@@ -9,13 +9,13 @@ module Identified
       super(sequential_group_number)
     end
 
-    private
     # Converts a group number to the index of the sequence of its allocation. Valid return values
     # are between 1 and 100.
     def self.convert_to_sequential_number(group_number)
       @group_index_table ||= generate_index_conversion
       @group_index_table[group_number]
     end
+    # private_class_method :convert_to_sequential_number
 
     # Creates the conversion table that goes from regular group number to the index of allocation
     def self.generate_index_conversion
@@ -36,5 +36,6 @@ module Identified
 
       index_table
     end
+    private_class_method :generate_index_conversion
   end
 end

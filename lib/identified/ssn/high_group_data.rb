@@ -23,6 +23,5 @@ module Identified
         .sort_by!(&:date_effective)
     end
     private_class_method :load_data
-
   end
 end

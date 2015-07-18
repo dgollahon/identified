@@ -1,7 +1,7 @@
 module Identified
   # Wraps the actual data file to provide convenient access to area number => issuing state info.
   module IssuingStateData
-    ISSUING_STATE_ENTRY_REGEX = /(?<start_area>\d{3})-(?<end_area>\d{3})\s(?<high_group>\w{2})/
+    ISSUING_STATE_ENTRY_REGEX = /(\d{3})-(\d{3})\s(\w{2})/
     # Provides an array of potential states or protectorates the ssn was issued in. Date is required
     # because this information cannot be known if it was issued after the randomizaiton date.
     # Unknown area numbers return [].
@@ -31,24 +31,14 @@ module Identified
       lookup_table = {}
 
       # The data is formatted as a range [start]-[end] then the two character state / province code.
-      raw_data.scan(ISSUING_STATE_ENTRY_REGEX) do |match|
-        start_area, end_area, state_code = extract_issuing_state_components(match)
-        (start_area..end_area).each do |area_number|
+      raw_data.scan(ISSUING_STATE_ENTRY_REGEX) do |(start_area, end_area, state_code)|
+        (start_area.to_i).upto(end_area.to_i).each do |area_number|
           lookup_table[area_number] ||= []
           lookup_table[area_number] << state_code
         end
       end
 
       lookup_table
-    end
-
-    # Helper function to parse a single row.
-    def self.extract_issuing_state_components(match)
-      start_area = match[:start_area].to_i
-      end_area = match[:end_area].to_i
-      state_code = match[:state_code]
-
-      [start_area, end_area, state_code]
     end
   end
 end

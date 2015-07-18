@@ -3,7 +3,6 @@ module Identified
   class HighGroupList
     HIGH_GROUP_LIST_DATE_REGEX = %r(HIGHEST GROUP ISSUED AS OF (?<date>\d{1,2}/\d{2}/\d{2}))
 
-
     attr_reader :date_effective, :high_groups
 
     def initialize(filename)

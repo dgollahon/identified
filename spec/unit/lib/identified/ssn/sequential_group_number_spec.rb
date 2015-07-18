@@ -4,8 +4,8 @@ module Identified
   describe SequentialGroupNumber do
     describe '.generate_index_conversion' do
       it 'should produce 99 elements' do
-        expect(SequentialGroupNumber.generate_index_conversion.keys.length).to eq 99
-        expect(SequentialGroupNumber.generate_index_conversion.values.length).to eq 99
+        expect(SequentialGroupNumber.send(:generate_index_conversion).keys.length).to eq 99
+        expect(SequentialGroupNumber.send(:generate_index_conversion).values.length).to eq 99
       end
     end
 
