@@ -1,6 +1,9 @@
 module Identified
   # An in-memory representation of a textual high group list.
   class HighGroupList
+    HIGH_GROUP_LIST_DATE_REGEX = %r(HIGHEST GROUP ISSUED AS OF (?<date>\d{1,2}/\d{2}/\d{2}))
+
+
     attr_reader :date_effective, :high_groups
 
     def initialize(filename)
@@ -19,7 +22,7 @@ module Identified
 
     # Searches the raw for the effective date.
     def parse_date(raw_data)
-      raw_date = %r(HIGHEST GROUP ISSUED AS OF (?<date>\d{1,2}/\d{2}/\d{2})).match(raw_data)[:date]
+      raw_date = HIGH_GROUP_LIST_DATE_REGEX.match(raw_data)[:date]
 
       day, month, year = extract_date_elements(raw_date)
 
