@@ -5,9 +5,12 @@ module Identified
     describe '.generate_index_conversion' do
       let(:index_conversion) { SequentialGroupNumber.send(:generate_index_conversion) }
 
-      it 'should produce 99 elements' do
+      it 'should should produce output values of 1..99' do
         expect(index_conversion.values).to eq (1..99).to_a
-        expect(index_conversion.keys.length).to eq 99
+      end
+
+      it 'shoudl contain the all keys of 1 through 99' do
+        expect((index_conversion.keys - (1..99).to_a).empty?).to be true
       end
     end
 
@@ -31,6 +34,10 @@ module Identified
     #  EVEN2 - 02, 04, 06, 08
     #  ODD2 - 11 to 99
     context 'converting group numbers' do
+      it 'should convert 10 to 6' do
+        expect(SequentialGroupNumber.new(10)).to eq 6
+      end
+
       context 'should mark earlier numbers < later group numbers' do
         it '3 < 12 (odd1 < even1)' do
           expect(SequentialGroupNumber.new(GroupNumber.new(3))).to be < SequentialGroupNumber.new(GroupNumber.new(12))
