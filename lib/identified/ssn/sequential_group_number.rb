@@ -15,7 +15,6 @@ module Identified
       @group_index_table ||= generate_index_conversion
       @group_index_table[group_number]
     end
-    # private_class_method :convert_to_sequential_number
 
     # Creates the conversion table that goes from regular group number to the index of allocation
     def self.generate_index_conversion

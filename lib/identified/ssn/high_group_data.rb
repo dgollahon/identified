@@ -5,8 +5,8 @@ module Identified
       data
     end
 
+    # Fetch the earliest dated list that is on or later than the issuance date.
     def self.latest_applicable_list(date_issued)
-      # Fetch the earliest dated list that is on or later than the issuance date.
       data.detect { |list| date_issued <= list.date_effective }
     end
 
