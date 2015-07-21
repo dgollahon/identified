@@ -30,7 +30,7 @@ and run `bundle install` from your shell.
 Creating a new SSN to validate:
 
 ```ruby
-# SSN formatted With dashes. Note that the date must be in `yyyy-mm-dd` format.
+# SSN formatted With dashes.
 ssn = Identified::SSN.new('123-45-6789', date_issued: Date.parse('1985-10-26'))
 
 # SSN formatted without dashes. In either case ssn.to_s will return '123-45-6789'.
