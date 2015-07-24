@@ -84,6 +84,10 @@ module Identified
         expect(SSN.new('123-45-0000').valid?).to be false
       end
 
+      it 'should be invalid when the area is not present in the high group list' do
+        expect(SSN.new('588010150', date_issued: Date.parse('2006-11-17')).valid?).to be false
+      end
+
       context 'when on the boundary of a high group list change' do
         let(:earlier_issuance) { Date.parse('2004-03-01') }
         let(:later_issuance) { Date.parse('2004-03-02') }

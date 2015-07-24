@@ -17,7 +17,10 @@ module Identified
     def valid_high_group?(area, date_issued)
       high_group_list = HighGroupData.latest_applicable_list(date_issued)
       high_group = high_group_list.high_group(area)
-      
+
+      # high_group will be nil if the area number is not listed in the current high group list.
+      return false unless high_group
+
       SequentialGroupNumber.new(self) <= SequentialGroupNumber.new(high_group)
     end
   end
