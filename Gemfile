@@ -11,8 +11,6 @@ end
 
 group :development, :test do
   gem 'pry', '~> 0.10'
-
-  gem 'pry-byebug', '~> 1.3.3'
 end
 
 group :guard do
