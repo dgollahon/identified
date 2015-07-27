@@ -4,13 +4,19 @@ gemspec name: 'identified'
 
 gem 'rake', '~> 10.4'
 
+group :test do
+  gem 'pry', '~> 0.10'
+
+  gem 'rspec', '~> 3.3.0'
+end
+
 group :metrics do
   # Dev tools
   gem 'devtools', git: 'https://github.com/rom-rb/devtools.git'
 end
 
-group :development, :test do
-  gem 'pry', '~> 0.10'
+group :development do
+  gem 'pry-byebug', '~> 1.3.3'
 end
 
 group :guard do
