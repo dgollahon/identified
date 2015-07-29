@@ -18,12 +18,14 @@ DataClump:
   min_clump_size: 2
 DuplicateMethodCall:
   enabled: true
-  exclude: []
+  exclude:
+    - 'GroupNumber#valid?'
   max_calls: 1
   allow_calls: []
 FeatureEnvy:
   enabled: true
-  exclude: []
+  exclude:
+    - 'format_ssn'
 IrresponsibleModule:
   enabled: true
   exclude: []
@@ -43,7 +45,8 @@ ModuleInitialize:
   exclude: []
 NestedIterators:
   enabled: true
-  exclude: []
+  exclude:
+    - 'self.parse_issuing_states'
   max_allowed_nesting: 1
   ignore_iterators: []
 NilCheck:
@@ -67,7 +70,8 @@ TooManyMethods:
 TooManyStatements:
   enabled: true
   exclude:
-  - initialize
+  - 'SSN#initialize'
+  - 'parse_issuing_states'
   max_statements: 5
 UncommunicativeMethodName:
   enabled: true
@@ -108,4 +112,6 @@ UnusedParameters:
   exclude: []
 UtilityFunction:
   enabled: true
-  exclude: []
+  exclude:
+    - 'extract_date_elements'
+    - 'parse_high_groups'
