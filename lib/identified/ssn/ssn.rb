@@ -27,7 +27,7 @@ module Identified
 
     # Returns whether the ssn COULD be a valid ssn.
     def valid?
-      area.valid?(date_issued) && group.valid?(area, date_issued) && serial.valid? && !retired?
+      area.valid? && group.valid?(area, date_issued) && serial.valid? && !retired?
     end
 
     # Provides an array of potential states or protectorates the ssn was issued in. This information

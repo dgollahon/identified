@@ -2,7 +2,6 @@ require 'spec_helper'
 
 module Identified
   describe SSN do
-
     INVALID_LENGTH_NUM_STRINGS = %w(12345678 1234567890)
     FIELD_TOO_SHORT = %w(12-34-5678 123-4-5678 123-45-678)
     FIELD_TOO_LONG = %w(1234-56-789 123-456-7890 123-45-67890)
@@ -14,6 +13,10 @@ module Identified
     POST_RANDOMIZED_INVALID_AREAS = %w(666-12-3456 900-12-3456)
     RETIRED_SSNS = %w(078-05-1120 219-09-9999)
     ALWAYS_INVALID = (POST_RANDOMIZED_INVALID_AREAS + SSNS_WITH_ZEROS + RETIRED_SSNS).map { |ssn| SSN.new(ssn) }
+
+    let(:pre_randomization_date) { Date.parse('2011-06-24') }
+    let(:randomization_date) { Date.parse('2011-06-25') }
+    let(:post_randomization_date) { Date.parse('2011-06-26') }
 
     context 'when creating an ssn' do
       it 'should accept valid dashed format' do
@@ -68,8 +71,42 @@ module Identified
         end
       end
 
-      it 'should be invalid with an invalid area before randomization' do
-        expect(SSN.new('773-45-6789', date_issued: Date.parse('2011-06-24')).valid?).to be false
+      # Prior to June 25, 2011 areas of 734-749 and above 772 were not used. Additionally, 000 and
+      # 666 are prohibited. See https://en.wikipedia.org/wiki/Social_Security_number#Valid_SSNs
+      # The source for the wiki article is http://www.socialsecurity.gov/employer/stateweb.htm,
+      # but it seems that the table presented is slightly out of date because it shows 750-772 as
+      # not issued when they really were. This can be (was) validated by checking the claim
+      # against the high group lists and seeing which had been used.
+      context 'area component' do
+        context 'before randomization' do
+          it '734-749 should be invalid' do
+            (734..749).each do |area|
+              expect(SSN.new("#{area}-45-6789", date_issued: pre_randomization_date).valid?).to be false
+            end
+          end
+
+          it '772-999 should be invalid' do
+            (772..999).each do |area|
+              expect(SSN.new("#{area}-45-6789", date_issued: pre_randomization_date).valid?).to be false
+            end
+          end
+        end
+
+        context 'after randomization' do
+          it '734-749 should be valid' do
+            (734..749).each do |area|
+              expect(SSN.new("#{area}-45-6789", date_issued: randomization_date).valid?).to be true
+              expect(SSN.new("#{area}-45-6789", date_issued: post_randomization_date).valid?).to be true
+            end
+          end
+
+          it '772-899 should be valid' do
+            (772..899).each do |area|
+              expect(SSN.new("#{area}-45-6789", date_issued: randomization_date).valid?).to be true
+              expect(SSN.new("#{area}-45-6789", date_issued: post_randomization_date).valid?).to be true
+            end
+          end
+        end
       end
 
       it 'should be invalid with an invalid area after randomization' do
