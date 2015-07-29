@@ -1,22 +1,27 @@
-# The module that provides access to set of all high group data available.
-
 module Identified
+  # The module that provides access to set of all high group data available.
   module HighGroupData
     def self.all
-      @high_group_lists ||= load_data
+      data
     end
 
+    # Fetch the earliest dated list that is on or later than the issuance date.
     def self.latest_applicable_list(date_issued)
-      @high_group_lists ||= load_data
-      # Fetch the earliest date that is later than the issuance date.
-      @high_group_lists.detect { |list| date_issued <= list.date_effective }
+      data.detect { |list| date_issued <= list.date_effective }
     end
 
-    # Loads all high group lists into memory. The data is sorted in increasing order by the date the high group list was
-    # effective on.
-    def self.load_data
-      unordered_data = Dir['data/ssn/high_groups/*.txt'].map { |filename| HighGroupList.new(filename) }
-      unordered_data.sort_by!(&:date_effective)
+    def self.data
+      @data ||= load_data
     end
+    private_class_method :data
+
+    # Loads all high group lists into memory. The data is sorted in increasing order by the date the
+    # high group list was effective on.
+    def self.load_data
+      Dir[Config.data_path + '/ssn/high_groups/*.txt']
+        .map { |filename| HighGroupList.new(filename) }
+        .sort_by!(&:date_effective)
+    end
+    private_class_method :load_data
   end
 end
