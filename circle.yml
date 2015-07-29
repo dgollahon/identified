@@ -10,4 +10,4 @@ test:
     - "rvm-exec 1.9.3-p551 bundle exec rake"
     - "rvm-exec 2.0.0-p598 bundle exec rake"
     - "rvm-exec 2.1.5 bundle exec rake"
-    - "rvm-exec 2.2.0 bundle exec rake"
+    - "rvm-exec 2.2.0 CODECLIMATE_REPO_TOKEN=3c03a8fdf7a3ca731025b1bede6b35cededf5b8594d433c35a631dab2626dfd3 bundle exec rake"

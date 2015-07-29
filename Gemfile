@@ -8,6 +8,8 @@ group :test do
   gem 'pry', '~> 0.10'
 
   gem 'rspec', '~> 3.3.0'
+  
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :metrics do
