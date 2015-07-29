@@ -2,11 +2,11 @@
 ----
 [![Circle CI](https://circleci.com/gh/dgollahon/identified.svg?style=svg)](https://circleci.com/gh/dgollahon/identified)
 
-**identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible.
+**identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible. This project promises to deliver high quality code that has been thoroughly tested (99%+ mutation test coverage).
 
 Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future.  **This method is not comprehensive and should only be used as an additional signal, not a complete solution to SSN validation.**
 
-:boom: Battle-tested at [BlockScore](https://blockscore.com).
+:boom: Battle-tested at [BlockScore](https://blockscore.com) against ~90 million SSNs.
 
 ## Install
 
