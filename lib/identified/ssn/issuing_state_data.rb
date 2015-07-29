@@ -20,7 +20,7 @@ module Identified
     def self.load_issuing_states_table
       # Data originally taken from http://www.socialsecurity.gov/employer/stateweb.htm. The file
       # this reads was transformed slightly from the original to make it less cumbersome to parse.
-      raw_data = File.read('data/ssn/area_data.txt')
+      raw_data = File.read(File.join(Config.data_path, 'ssn/area_data.txt'))
 
       # issuing_states_table = parse_issuing_states(raw_data)
       parse_issuing_states(raw_data)

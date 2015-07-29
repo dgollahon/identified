@@ -15,4 +15,9 @@ require_relative 'identified/ssn/ssn'
 
 # A module for validating government document identifiers (like SSNs) with ease.
 module Identified
+  module Config
+    def self.data_path
+      File.expand_path(File.join(__FILE__, '../../data/'))
+    end
+  end
 end

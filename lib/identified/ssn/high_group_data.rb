@@ -18,7 +18,7 @@ module Identified
     # Loads all high group lists into memory. The data is sorted in increasing order by the date the
     # high group list was effective on.
     def self.load_data
-      Dir['data/ssn/high_groups/*.txt']
+      Dir[Config.data_path + '/ssn/high_groups/*.txt']
         .map { |filename| HighGroupList.new(filename) }
         .sort_by!(&:date_effective)
     end
