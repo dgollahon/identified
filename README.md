@@ -8,7 +8,7 @@
   <a href="https://codeclimate.com/github/dgollahon/identified">
     <img src="https://codeclimate.com/github/dgollahon/identified/badges/gpa.svg" align="center" alt="Code Climate">
   </a>
-  <a href="https://codeclimate.com/github/dgollahon/identified/badges/coverage.svg">
+  <a href="https://codeclimate.com/github/dgollahon/identified/coverage">
     <img src="https://codeclimate.com/github/dgollahon/identified/badges/coverage.svg" align="center" alt="Test Coverage">
   </a>
 </p>
