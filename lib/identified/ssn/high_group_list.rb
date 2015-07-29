@@ -12,9 +12,8 @@ module Identified
       @high_groups = parse_high_groups(raw_data)
     end
 
-    # The highest group that has been issued for a given area.
     def high_group(area)
-      high_groups[area]
+      high_groups[area] # Returns nil if area is not present!
     end
 
     private
@@ -32,9 +31,9 @@ module Identified
     def extract_date_elements(date_string)
       date_parts = date_string.split('/')
 
-      year = date_parts[2].to_i + 2000
-      month = date_parts[0].to_i
-      day = date_parts[1].to_i
+      year = date_parts.fetch(2).to_i + 2000
+      month = date_parts.fetch(0).to_i
+      day = date_parts.fetch(1).to_i
 
       [day, month, year]
     end

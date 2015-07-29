@@ -34,7 +34,7 @@ module Identified
       raw_data.scan(ISSUING_STATE_ENTRY_REGEX) do |start_area, end_area, state_code|
         (start_area.to_i).upto(end_area.to_i) do |area_number|
           lookup_table[area_number] ||= []
-          lookup_table[area_number] << state_code
+          lookup_table.fetch(area_number) << state_code
         end
       end
 

@@ -13,7 +13,7 @@ module Identified
     # are between 1 and 100.
     def self.convert_to_sequential_number(group_number)
       @group_index_table ||= generate_index_conversion
-      @group_index_table[group_number]
+      @group_index_table.fetch(group_number)
     end
 
     # Creates the conversion table that goes from regular group number to the index of allocation

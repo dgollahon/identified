@@ -19,6 +19,10 @@ module Identified
       it 'should return the correct high group' do
         expect(high_group_list.high_group(1)).to eq 98
       end
+
+      it 'should return nil the area is unlisted' do
+        expect(high_group_list.high_group(773)).to be nil
+      end
     end
 
     describe '#high_groups' do

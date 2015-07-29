@@ -5,16 +5,24 @@ module Identified
     context 'basic group number validation' do
       it 'should not accept 0 as a group' do
         expect(GroupNumber.new(0).valid?).to be false
+        expect(GroupNumber.new(0).valid?(1, Date.new(1985,10,26))).to be false
       end
 
       it 'should accept 1-99 as a group' do
         (1..99).each do |group_number|
           expect(GroupNumber.new(group_number).valid?).to be true
         end
+        # check upper bound before randomization
+        expect(GroupNumber.new(99).valid?(223, Date.new(2011,6,24))).to be true
       end
 
       it 'should not accept 100+ as a group' do
         expect(GroupNumber.new(100).valid?).to be false
+        expect(GroupNumber.new(100).valid?(1, Date.new(1985,10,26))).to be false
+      end
+
+      it 'should return false when the high group is not present in the list' do
+        expect(GroupNumber.new(1).valid?(773, Date.new(1985,10,26))).to be false
       end
     end
 
