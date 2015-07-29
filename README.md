@@ -6,7 +6,7 @@
 
 Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future.  **This method is not comprehensive and should only be used as an additional signal, not a complete solution to SSN validation.**
 
-:boom: Battle-tested at [BlockScore](https://blockscore.com) against ~90 million SSNs.
+:boom: Battle-tested at [BlockScore](https://blockscore.com) against **~90 million** SSNs.
 
 ## Install
 
@@ -48,7 +48,7 @@ ssn = Identified::SSN.new('123-45-6789')
 ssn.valid? # => true
 ```
 
-If the date of issuance is known, identified will check the number against the SSN high group lists and compare it to millions of invalid numbers. If the provided date is after the randomization date, the behavior of `valid?` will be as if no date of issuance was provided and only perform basic validation.
+If the date of issuance is known (note that this is not necessarily the same as a date of birth), identified will check the number against the SSN high group lists and compare it to millions of invalid numbers. If the provided date is after the randomization date, the behavior of `valid?` will be as if no date of issuance was provided and only perform basic validation.
 
 ```ruby
 # The earlier date causes the group number to be validated with one high group list
