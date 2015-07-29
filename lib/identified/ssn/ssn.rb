@@ -17,7 +17,11 @@ module Identified
       @serial = SerialNumber.new(serial_num)
 
       # Emulating keyword arguments to provide ruby 1.9.3 support.
-      @date_issued = options.delete(:date_issued)
+      if options.is_a?(Hash)
+        @date_issued = options.delete(:date_issued)
+      else
+        fail ArgumentError, 'Unexpected argument. The second argument must be an options hash.'
+      end
       fail ArgumentError, "Unrecgonized option(s): #{options}" if options.any?
     end
 
