@@ -39,6 +39,10 @@ module Identified
         expect { Identified::SSN.new('123-45-6789', dat_issued: '1985-10-26') }.to raise_error ArgumentError, 'Unrecgonized option(s): {:dat_issued=>"1985-10-26"}'
       end
 
+      it 'should not allow non-keyword arguments' do
+        expect { Identified::SSN.new('123-45-6789', Date.parse('1992-01-01')) }.to raise_error ArgumentError, 'Unexpected argument. The second argument must be an options hash.'
+      end
+
       it 'should fail with malformed ssns' do
         MALFORMED_SSNS.each do |ssn_string|
           expect { Identified::SSN.new(ssn_string) }.to raise_error MalformedSSNError
