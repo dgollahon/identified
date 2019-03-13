@@ -1,19 +1,6 @@
 ![identified](identified_logo.png)
 ----
 
-<p align="center">
-  <a href="https://circleci.com/gh/dgollahon/identified">
-    <img src="https://circleci.com/gh/dgollahon/identified.svg?style=shield" align="center" alt="Circle CI">
-  </a>
-  <a href="https://codeclimate.com/github/dgollahon/identified">
-    <img src="https://codeclimate.com/github/dgollahon/identified/badges/gpa.svg" align="center" alt="Code Climate">
-  </a>
-  <a href="https://codeclimate.com/github/dgollahon/identified/coverage">
-    <img src="https://codeclimate.com/github/dgollahon/identified/badges/coverage.svg" align="center" alt="Test Coverage">
-  </a>
-</p>
-
-
 **identified** is a gem to help validate government document identifiers (such as Social Security Numbers) and extract any other useful data possible. This project promises to deliver high quality code that has been thoroughly tested (99%+ mutation test coverage).
 
 Currently the gem only supports Social Security Numbers, but will be expanded to support other documents in the future.  **This method is not comprehensive and should only be used as an additional signal, not a complete solution to SSN validation.**
